@@ -1,0 +1,7 @@
+body {
+    font-family: Vazirmatn, Arial, Helvetica, sans-serif;
+}
+
+#errors {
+    color: red;
+}
