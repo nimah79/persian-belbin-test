@@ -58,11 +58,16 @@ const roles = {
         encouragers: 'در مورد تمام جزئیات طرح با او شفاف باشید. از ایده‌های بزرگ اجتناب کنید. به‌دنبال پیشنهادات عملی و کوتاه‌مدت باشید. با او در مورد پاسخ‌های ساختاردار و جزئی‌شده توافق کنید.'
     },
 };
+let options_with_score_10_count = 0;
 
 function getSum(questionNumber) {
     let sum = 0;
     for (const option of options) {
-        sum += parseFloat($('#' + questionNumber + option).val()) || 0;
+        let score = parseFloat($('#' + questionNumber + option).val()) || 0;
+        if (score == 10) {
+            options_with_score_10_count++;
+        }
+        sum += score;
     }
     return parseFloat(sum);
 }
@@ -82,11 +87,15 @@ for (let i = 1; i <= questionsCount; i++) {
 $('form').submit(function (e) {
     e.preventDefault();
     let errorsHtml = '';
+    options_with_score_10_count = 0;
     for (let i = 1; i <= questionsCount; i++) {
         const sum = getSum(i);
         if (sum != 10) {
             errorsHtml += '<li>مجموع امتیازات سؤال ' + i + ' برابر با ' + sum + ' است، اما باید برابر با 10 باشد.</li>';
         }
+    }
+    if (options_with_score_10_count > 3) {
+        errorsHtml += '<li>تعداد گزینه‌های با امتیاز 10 نباید بیشتر از 3 شود. این عدد در حال حاضر ' + options_with_score_10_count + ' است.</li>';
     }
     $('#errors').html(errorsHtml);
     if (errorsHtml) {
