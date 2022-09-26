@@ -90,7 +90,7 @@ $('form').submit(function (e) {
     }
     $('#errors').html(errorsHtml);
     if (errorsHtml) {
-        $('#results').hide();
+        $('#results_section').hide();
         $('#errors').show();
         return;
     }
